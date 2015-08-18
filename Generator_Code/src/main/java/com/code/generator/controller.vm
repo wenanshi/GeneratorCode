@@ -1,0 +1,153 @@
+package com.ymt.crm.rs.resources.${moduleName};
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST; 
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context; 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.alibaba.fastjson.JSON;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
+import com.wordnik.swagger.jaxrs.PATCH;
+import com.ymt.common.exceptions.ApiException;
+import com.ymt.entities.query.QueryCondition;
+import com.ymt.common.pager.Pager;
+import com.ymt.domain.${moduleName}.${classname}Domain;
+import com.ymt.service.${moduleName}.I${classname}Service;
+import com.ymt.utils.ResponseBuilder;
+import com.ymt.utils.ConditionBuilder; 
+
+
+@Path("/${moduleName}/${newclassname}")
+@Consumes(MediaType.APPLICATION_JSON)
+@Api(value = "${tableDesc}管理REST API", description = "${tableDesc}管理REST API")
+public class ${classname}Resource {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Autowired
+	private I${classname}Service ${newclassname}Service = null;
+	@POST
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON) 
+ 	@ApiOperation(value = "添加${tableDesc}", response = String.class, httpMethod = "POST", notes="添加${tableDesc}")
+ 	@ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    public Response post(@HeaderParam("Authorization") String authToken,List<${classname}Domain> dataList) throws IOException {
+		logger.debug("新增${tableDesc}，请求参数为："+JSON.toJSONString(dataList));
+		try {
+			${newclassname}Service.create(dataList);
+		} catch (ApiException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			return Response.serverError().entity(e.getMessage()).build();
+		}
+		logger.debug("新增${tableDesc}成功！");
+        return ResponseBuilder.buildSuccessResponse(dataList);
+    }
+	@PATCH
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON) 
+ 	@ApiOperation(value = "更新${tableDesc}信息", response = ${classname}Domain.class, httpMethod = "PATCH", notes="更新${tableDesc}信息")
+ 	@ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    public Response update(@HeaderParam("Authorization") String authToken,${classname}Domain ${newclassname}) throws IOException {
+		logger.debug("更新${tableDesc}${tableDesc}，请求参数为："+JSON.toJSONString(${newclassname}));
+		try {
+			${newclassname}Service.update(${newclassname});
+		} catch (ApiException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			return Response.serverError().entity(e.getMessage()).build();
+		}
+		logger.debug("更新${tableDesc}成功！");
+        return ResponseBuilder.buildSuccessResponse();
+    }
+	@GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON) 
+ 	@ApiOperation(value = "根据ID查询${tableDesc}信息", response = ${classname}Domain.class, httpMethod = "GET", notes="根据ID查询${tableDesc}信息")
+ 	@ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    public Response get(@HeaderParam("Authorization") String authToken,@PathParam("id") Integer ${newclassname}Id) throws IOException {
+		logger.debug("根据ID查询${tableDesc}，请求参数为："+${newclassname}Id);
+		${classname}Domain ${newclassname} = null;
+		try {
+			${newclassname} = ${newclassname}Service.find(${newclassname}Id);
+		} catch (ApiException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			return Response.serverError().entity(e.getMessage()).build();
+		}
+		logger.debug("根据ID查询${tableDesc}成功！");
+        return Response.status(Response.Status.OK).entity(${newclassname}).build();
+    }
+	@DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON) 
+ 	@ApiOperation(value = "根据ID删除${tableDesc}", response = ${classname}Domain.class, httpMethod = "DELETE", notes="根据ID删除${tableDesc}")
+ 	@ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    public Response delete(@HeaderParam("Authorization") String authToken,@PathParam("id") Integer ${newclassname}Id) throws IOException {
+		logger.debug("根据ID删除${tableDesc}，请求参数为："+${newclassname}Id);
+		try {
+			  ${newclassname}Service.remove(${newclassname}Id);
+		} catch (ApiException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			return Response.serverError().entity(e.getMessage()).build();
+		}
+		logger.debug("根据ID删除${tableDesc}成功！");
+        return ResponseBuilder.buildSuccessResponse();
+    }
+    
+    @DELETE
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON) 
+ 	@ApiOperation(value = "根据IDList删除${tableDesc}", response = ${classname}Domain.class, httpMethod = "DELETE", notes="根据IDList删除${tableDesc}")
+ 	@ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    public Response delete(@HeaderParam("Authorization") String authToken,String json) throws IOException {
+		logger.debug("根据IDList删除${tableDesc}，请求参数为："+json);
+		try {
+			  List<Integer> pkList = JSON.parseArray(json,Integer.class);
+			  ${newclassname}Service.remove(pkList);
+		} catch (ApiException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			return Response.serverError().entity(e.getMessage()).build();
+		}
+		logger.debug("根据IDList删除${tableDesc}成功！");
+        return ResponseBuilder.buildSuccessResponse();
+    }
+	 
+    @GET
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON) 
+ 	@ApiOperation(value = "查询${tableDesc}列表", response = ${classname}Domain.class, httpMethod = "GET", notes="查询${tableDesc}列表")
+ 	@ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    public Response queryByParentIdd(@HeaderParam("Authorization") String authToken,@Context HttpServletRequest request) throws IOException {
+		Pager<${classname}Domain> pager = null;
+		try {
+			 //构造查询条件
+			QueryCondition queryCondition =	ConditionBuilder.buildCondition(request, ${classname}Domain.class);
+			logger.debug("根据条件查询${tableDesc}，请求参数为:",JSON.toJSON(queryCondition).toString());
+			pager =  ${newclassname}Service.findForPager(queryCondition);
+		} catch (ApiException e) {
+			logger.error(e.getMessage(), e);
+			throw e;
+		}
+		
+        return ResponseBuilder.buildPager(pager);
+    } 
+}

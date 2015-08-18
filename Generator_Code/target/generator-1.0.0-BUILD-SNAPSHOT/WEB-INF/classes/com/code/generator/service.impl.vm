@@ -1,0 +1,19 @@
+package com.ymt.service.${moduleName}.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ymt.dao.${moduleName}.I${classname}Dao;
+import com.ymt.domain.${moduleName}.${classname}Domain;
+import com.ymt.entities.${moduleName}.${classname}Entity; 
+import com.ymt.service.${moduleName}.I${classname}Service; 
+import com.ymt.service.base.impl.AbstractBaseService;
+ 
+@Service("${classname}ServiceImpl")
+public class ${classname}ServiceImpl extends 	AbstractBaseService<${classname}Domain,${classname}Entity, Integer> implements I${classname}Service {
+
+	@ Autowired
+	public ${classname}ServiceImpl(I${classname}Dao ${newclassname}Dao ) {
+		super(${newclassname}Dao);
+	}
+}

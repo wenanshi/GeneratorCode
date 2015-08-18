@@ -1,0 +1,26 @@
+package com.ymt.dao.${moduleName}.impl;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
+
+import com.ymt.dao.base.impl.BaseDaoImpl;
+import com.ymt.dao.${moduleName}.I${classname}Dao;
+import com.ymt.entities.${moduleName}.${classname}Entity;
+
+@Repository
+public class ${classname}DaoImpl extends BaseDaoImpl<${classname}Entity, Integer> implements I${classname}Dao {
+     
+@Qualifier("sqlSession")
+	@Autowired
+	private SqlSessionTemplate sqlSession = null;
+	
+    public ${classname}DaoImpl() {
+		super(${classname}DaoImpl.class.getName());
+    }
+	public  SqlSessionTemplate getSqlSession(){
+		return sqlSession;
+	}
+ 
+}

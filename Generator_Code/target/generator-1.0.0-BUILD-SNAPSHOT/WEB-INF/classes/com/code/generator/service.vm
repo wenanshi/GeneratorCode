@@ -1,0 +1,10 @@
+package com.ymt.service.${moduleName};
+
+import com.ymt.domain.${moduleName}.${classname}Domain;
+import com.ymt.entities.${moduleName}.${classname}Entity;
+import com.ymt.service.base.IBaseService;
+ 
+ 
+public interface I${classname}Service extends IBaseService<${classname}Domain,${classname}Entity, Integer>{
+	 
+}

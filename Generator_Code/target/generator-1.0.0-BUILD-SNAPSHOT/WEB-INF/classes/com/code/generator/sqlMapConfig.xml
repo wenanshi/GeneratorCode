@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE configuration PUBLIC       
+ "-//mybatis.org//DTD Config 3.0//EN"      
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 单节点，启用缓存 -->
+		<setting name="cacheEnabled" value="true" />
+		 <setting name="useGeneratedKeys" value="true" /> 
+        <setting name="defaultExecutorType" value="REUSE" /> 
+	</settings>
+	<typeAliases> 
+         
+		<!-- <typeAlias type="com.linkdsp.api.doc.domain.DocTopic" alias="DocTopic"/>  -->  
+		<!-- end -->  
+	</typeAliases>
+	<mappers> 
+		<mapper resource="com/ymt/code/generator/tableinfo.map.xml"/>
+	</mappers>
+</configuration>

@@ -1,0 +1,43 @@
+
+package com.ymt.entities.${moduleName};
+
+import java.io.Serializable; 
+import com.ymt.entities.AbstractEntity;
+
+
+//${tableDesc}
+public class ${classname}Entity extends AbstractEntity<Integer> implements Serializable {
+	private static final long serialVersionUID = 1L;
+	#foreach($row in $collist)
+	 #if(${row.newfield_name} != "createdBy" && ${row.newfield_name} != "updatedBy"
+		 	 && ${row.newfield_name} != "createdTime" && ${row.newfield_name} != "updatedTime"
+		 	  && ${row.newfield_name} != "ordnum" && ${row.newfield_name} != "status" )
+		//${row.column_comment}
+		private ${row.coltype} ${row.newfield_name} #if(${row.coltype}=="int" || ${row.coltype}=="long")=-1#end;
+		#end
+	#end	
+		#foreach($row in $collist)
+		 #if(${row.newfield_name} != "createdBy" && ${row.newfield_name} != "updatedBy"
+		 	 && ${row.newfield_name} != "createdTime" && ${row.newfield_name} != "updatedTime"
+		 	  && ${row.newfield_name} != "ordnum" && ${row.newfield_name} != "status" )
+		public void set${row.newcolumn_name}(${row.coltype}  ${row.newfield_name}){
+			this.${row.newfield_name} = ${row.newfield_name};
+		}
+		public ${row.coltype} get${row.newcolumn_name}(){
+			return this.${row.newfield_name};
+		}
+		#end
+	#end	
+	
+	@Override
+	public void setPK(Integer pk) {
+	 
+
+	}
+
+	@Override
+	public Integer getPK() {
+	 
+		return null;
+	}
+}

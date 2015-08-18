@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ymt.dao.${moduleName}.impl.${classname}DaoImpl">
+	  <resultMap id="${tablename}_map" type="com.ymt.entitiy.${moduleName}.xml.${classname}Entity">
+		 #foreach($row in $collist)
+			<result property="${row.newfield_name}" column="${row.column_name}" /> 
+		#end 
+	</resultMap>
+	#set ($key=1)
+	#foreach($row in $collist)
+		#if(${row.column_key} == "PRI")
+			#set ($key=${row.newfield_name})
+		#end
+	#end	
+	<insert id="create" parameterType="com.ymt.entity.${moduleName}.xml.${classname}Entity">
+		<selectKey keyProperty="$key" resultType="Integer" order="AFTER"> 
+			select LAST_INSERT_ID() as  $key
+		</selectKey>  
+		insert into  ${tablename} (
+	   #set ($i=0)  
+		#foreach($row in $collist)  
+			#if(${row.column_key} != "PRI") 
+			         #if($i!=0),#end${row.column_name}
+			          #set ($i=$i+1)
+			#end 
+		#end	 
+		) values ( 
+	     #set ($i=0)  
+			#foreach($row in $collist)  
+				#if(${row.column_key} != "PRI") 
+				        #if($i!=0),#end#{${row.newfield_name}} 
+				         #set ($i=$i+1)
+				#end 
+			#end	 
+		)
+	</insert>
+	<update id="update" parameterType="com.ymt.entity.${moduleName}.xml.${classname}Entity">
+		update ${tablename}      
+	 <set> 
+     #foreach($row in $collist)  
+			#if(${row.column_key} != "PRI")
+			 #if(${row.newfield_name} != "createdBy"    && ${row.newfield_name} != "createdTime"  ) 
+				 <if test="${row.newfield_name} != null">${row.column_name} =#{${row.newfield_name}},</if> 
+			  #end 
+			#end 
+		#end	  
+	</set> 
+     where 
+		#foreach($row in $collist)  
+			#if(${row.column_key} == "PRI") 
+			        ${row.column_name} = #{${row.newfield_name}} 
+			#end 
+		#end	 
+		
+	</update>
+	<delete id="remove" parameterType="Integer">
+		update  ${tablename}  set
+		 status= 0
+		where 
+		 #foreach($row in $collist)  
+			#if(${row.column_key} == "PRI") 
+			        ${row.column_name} = #{${row.newfield_name}} 
+			#end 
+		#end	 
+	</delete>
+	<select id="findAll" resultMap="${tablename}_map">
+		 select #foreach($row in $collist)  
+			#if(${row.column_key} == "PRI") 
+			     ${row.column_name}
+			#end 
+		#end	  
+		#foreach($row in $collist)  
+			#if(${row.column_key} != "PRI") 
+			        ,${row.column_name}
+			#end 
+		#end	  from  ${tablename} where status=1
+	</select> 
+	<select id="find" resultMap="${tablename}_map" parameterType="Integer">
+	  select #foreach($row in $collist)  
+			#if(${row.column_key} == "PRI") 
+			     ${row.column_name}
+			#end 
+		#end	  
+		#foreach($row in $collist)  
+			#if(${row.column_key} != "PRI") 
+			        ,${row.column_name}
+			#end 
+		#end	  from  ${tablename} where 
+		#foreach($row in $collist)  
+			#if(${row.column_key} == "PRI") 
+			        ${row.column_name} = #{${row.newfield_name}} 
+			#end 
+		#end	 
+		and  status=1
+	</select> 
+	<select id="findByBeanProp" parameterType="com.ymt.entity.${moduleName}.xml.${classname}Entity" resultMap="${tablename}_map">
+		select #foreach($row in $collist)  
+			#if(${row.column_key} == "PRI") 
+			     ${row.column_name}
+			#end 
+		#end	  
+		#foreach($row in $collist)  
+			#if(${row.column_key} != "PRI") 
+			        ,${row.column_name}
+			#end 
+		#end	  from  ${tablename} where  status=1
+		#foreach($row in $collist)  
+			#if(${row.coltype} == "String")
+				<if test="${row.newfield_name} != null">  
+			      and ${row.column_name} like concat('%',#{${row.newfield_name}},'%') 
+			    </if>  
+			#end   
+			#if(${row.coltype} == "Integer")
+				<if test="${row.newfield_name} != null">  
+			      and ${row.column_name} = #{${row.newfield_name}}
+			    </if>  
+			#end   
+		#end
+	</select>
+	<select id="findForPager" parameterType="map" resultMap="${tablename}_map">
+		select #foreach($row in $collist)  
+			#if(${row.column_key} == "PRI") 
+			     ${row.column_name}
+			#end 
+		#end	  
+		#foreach($row in $collist)  
+			#if(${row.column_key} != "PRI") 
+			        ,${row.column_name}
+			#end 
+		#end	  from  ${tablename} where  status=1
+		#foreach($row in $collist)  
+			#if(${row.coltype} == "String")
+				<if test="${row.newfield_name} != null">  
+			      and ${row.column_name} like concat('%',#{${row.newfield_name}},'%') 
+			    </if>  
+			#end   
+		#end
+	      limit #{startNum},#{pageSize}
+	</select>
+	<select id="findForPagerCount" parameterType="com.ymt.entity.${moduleName}.xml.${classname}Entity" resultType="Integer"> 
+		select count(1) as count from  ${tablename} where  status=1
+		#foreach($row in $collist)  
+			#if(${row.coltype} == "String")
+				<if test="${row.newfield_name} != null">  
+			      and ${row.column_name} like concat('%',#{${row.newfield_name}},'%') 
+			    </if>  
+			#end 
+		#end 
+	</select>
+	
+	<select id="dyFindForPager" parameterType="map" resultMap="${tablename}_map">
+		select #foreach($row in $collist)  
+			#if(${row.column_key} == "PRI") 
+			     ${row.column_name}
+			#end 
+		#end	  
+		#foreach($row in $collist)  
+			#if(${row.column_key} != "PRI") 
+			        ,${row.column_name}
+			#end 
+		#end from  ${tablename} where  status=1
+		  		
+   		<if test = "conditionList != null">
+			 <foreach collection="conditionList" item="item" index="index"  >  
+	     			 
+			        <choose>  
+			            <when test="item.dbOp == 'in' ">  
+			               and ${item.colName}  IN   
+					     <foreach collection="item.value" item="key"  open="(" separator="," close=")">  
+					        #{key}  
+					     </foreach>  
+			            </when >  
+			            <when test="item.dbOp == 'like' ">  
+			             and   ${item.colName} like concat('%',#{item.value},'%')
+			            </when >   
+			            <otherwise>  
+			            and	 ${item.colName}  ${item.dbOp}  #{item.value}  
+			            </otherwise>  
+			        </choose>  
+	   		 </foreach>   
+		</if>
+		<if test ="order != null">
+			order by 
+			 <foreach collection="order" item="item" index="index" separator="," >  
+	     			${item}
+	   		 </foreach>   
+		</if>
+		<if test ="direction != null">
+			${direction}
+		</if>
+	      limit #{startNum},#{pageSize}
+	</select>
+	<select id="dyFindForPagerCount" parameterType="map" resultType="Integer"> 
+		select count(1) as count from  ${tablename} where  status=1
+		 <if test = "conditionList != null">
+			 <foreach collection="conditionList" item="item" index="index"  >  
+	     			 
+			        <choose>  
+			            <when test="item.dbOp == 'in' ">  
+			               and ${item.colName}  IN   
+					     <foreach collection="item.value" item="key"  open="(" separator="," close=")">  
+					        #{key}  
+					     </foreach>  
+			            </when >  
+			            <when test="item.dbOp == 'like' ">  
+			             and   ${item.colName} like concat('%',#{item.value},'%')
+			            </when >   
+			            <otherwise>  
+			            and	 ${item.colName}  ${item.dbOp}  #{item.value}  
+			            </otherwise>  
+			        </choose>  
+	   		 </foreach>   
+		</if>
+	</select>
+	 
+	 
+</mapper>

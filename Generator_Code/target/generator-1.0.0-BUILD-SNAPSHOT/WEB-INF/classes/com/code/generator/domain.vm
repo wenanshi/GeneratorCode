@@ -1,0 +1,34 @@
+package com.ymt.domain.${moduleName};
+
+import java.io.Serializable;
+
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
+import com.ymt.domain.AbstractDomain;
+
+
+@ApiModel(value = "${tableDesc}", description = "${tableDesc}")
+public class ${classname}Domain  extends AbstractDomain  implements Serializable {
+	private static final long serialVersionUID = 1L;
+	#foreach($row in $collist)
+	 #if(${row.newfield_name} != "createdBy" && ${row.newfield_name} != "updatedBy"
+		 	 && ${row.newfield_name} != "createdTime" && ${row.newfield_name} != "updatedTime"
+		 	  && ${row.newfield_name} != "ordnum" && ${row.newfield_name} != "status" )
+		@ApiModelProperty("${row.column_comment}")
+		private ${row.coltype} ${row.newfield_name} #if(${row.coltype}=="int" || ${row.coltype}=="long")=-1#end;
+		#end
+	#end	
+		#foreach($row in $collist)
+		 #if(${row.newfield_name} != "createdBy" && ${row.newfield_name} != "updatedBy"
+		 	 && ${row.newfield_name} != "createdTime" && ${row.newfield_name} != "updatedTime"
+		 	  && ${row.newfield_name} != "ordnum" && ${row.newfield_name} != "status" )
+		public void set${row.newcolumn_name}(${row.coltype}  ${row.newfield_name}){
+			this.${row.newfield_name} = ${row.newfield_name};
+		}
+		public ${row.coltype} get${row.newcolumn_name}(){
+			return this.${row.newfield_name};
+		}
+		#end
+	#end	
+}
+
