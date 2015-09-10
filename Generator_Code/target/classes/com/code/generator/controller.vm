@@ -1,4 +1,4 @@
-package com.ymt.crm.rs.resources.${moduleName};
+package com.ymt.etp.rs.resources.${moduleName};
 
 import java.io.IOException;
 import java.util.List;
@@ -27,7 +27,7 @@ import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
 import com.wordnik.swagger.jaxrs.PATCH;
 import com.ymt.common.exceptions.ApiException;
-import com.ymt.entities.query.QueryCondition;
+import com.ymt.entity.query.QueryCondition;
 import com.ymt.common.pager.Pager;
 import com.ymt.domain.${moduleName}.${classname}Domain;
 import com.ymt.service.${moduleName}.I${classname}Service;

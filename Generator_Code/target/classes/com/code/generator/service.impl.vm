@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.ymt.dao.${moduleName}.I${classname}Dao;
 import com.ymt.domain.${moduleName}.${classname}Domain;
-import com.ymt.entities.${moduleName}.${classname}Entity; 
+import com.ymt.entity.${moduleName}.${classname}Entity; 
 import com.ymt.service.${moduleName}.I${classname}Service; 
 import com.ymt.service.base.impl.AbstractBaseService;
  

@@ -1,7 +1,7 @@
 package com.ymt.dao.${moduleName};
 
 import com.ymt.dao.base.IDao;
-import com.ymt.entities.${moduleName}.${classname}Entity;
+import com.ymt.entity.${moduleName}.${classname}Entity;
 
 
 public interface I${classname}Dao extends IDao<${classname}Entity,Integer> {    
