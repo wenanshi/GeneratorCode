@@ -1,7 +1,7 @@
 package com.ymt.service.${moduleName};
 
 import com.ymt.domain.${moduleName}.${classname}Domain;
-import com.ymt.entities.${moduleName}.${classname}Entity;
+import com.ymt.entity.${moduleName}.${classname}Entity;
 import com.ymt.service.base.IBaseService;
  
  

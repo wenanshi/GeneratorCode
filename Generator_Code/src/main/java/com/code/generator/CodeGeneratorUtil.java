@@ -24,12 +24,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 * @version V1.0
  */
 public class CodeGeneratorUtil {
-	private static String ROOT_PATH="/Users/zhangshuai/workspace/generator"; //代码基本路径
+	private static String ROOT_PATH="/Users/ymt/workspace_etp/generator"; //代码基本路径
 	public static void main(String[] args) throws ResourceNotFoundException, ParseErrorException, Exception {
 		
-		String tablename =  "Sys_Staff"; //数据库表名
-		String classname = "SysStaff"; //类前置（即：子模块名）
-		String moduleName = "sys"; //模块名
+		String tablename =  "pro_product"; //数据库表名
+		String classname = "ProPorduct"; //类前置（即：子模块名）
+		String moduleName = "pro"; //模块名
 		String tableDesc = "系统人员功能管理"; //当前业务模块的概要想描述（表描述）
 		generator(tablename,classname,moduleName,tableDesc);
 	}

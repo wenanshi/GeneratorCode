@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ymt.dao.${moduleName}.impl.${classname}DaoImpl">
-	  <resultMap id="${tablename}_map" type="com.ymt.entitiy.${moduleName}.xml.${classname}Entity">
+	  <resultMap id="${tablename}_map" type="com.ymt.entity.${moduleName}.xml.${classname}Entity">
 		 #foreach($row in $collist)
 			<result property="${row.newfield_name}" column="${row.column_name}" /> 
 		#end 

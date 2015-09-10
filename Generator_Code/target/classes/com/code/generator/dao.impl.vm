@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.ymt.dao.base.impl.BaseDaoImpl;
+import com.ymt.dao.base.impl.AbstractBaseDaoImpl;
 import com.ymt.dao.${moduleName}.I${classname}Dao;
-import com.ymt.entities.${moduleName}.${classname}Entity;
+import com.ymt.entity.${moduleName}.${classname}Entity;
 
 @Repository
-public class ${classname}DaoImpl extends BaseDaoImpl<${classname}Entity, Integer> implements I${classname}Dao {
+public class ${classname}DaoImpl extends AbstractBaseDaoImpl<${classname}Entity, Integer> implements I${classname}Dao {
      
 @Qualifier("sqlSession")
 	@Autowired

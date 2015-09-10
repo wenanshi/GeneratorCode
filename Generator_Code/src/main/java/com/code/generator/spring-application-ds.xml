@@ -23,9 +23,9 @@
         <!--property name="url" value="jdbc:mysql://daibangdb001.mysql.rds.aliyuncs.com:3306/engine?autoReconnect=true&amp;characterEncoding=UTF-8" />
         <property name="username" value="cloud_engine" />
         <property name="password" value="engine2014" /-->
-        <property name="url" value="${database.url}" />
-        <property name="username" value="${database.username}" />
-        <property name="password" value="${database.password}" />
+        <property name="url" value="jdbc:mysql://cp-dev.ymt.io:3306/etp" />
+        <property name="username" value="etp" />
+        <property name="password" value="etp-dev" />
         <property name="defaultAutoCommit" value="false"/>
         <!-- 配置初始化大小、最小、最大 -->
         <property name="initialSize" value="1" />

@@ -1,8 +1,8 @@
 
-package com.ymt.entities.${moduleName};
+package com.ymt.entity.${moduleName};
 
 import java.io.Serializable; 
-import com.ymt.entities.AbstractEntity;
+import com.ymt.entity.AbstractEntity;
 
 
 //${tableDesc}
